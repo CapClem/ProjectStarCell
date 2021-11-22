@@ -15,6 +15,11 @@ public class PlayerController1 : MonoBehaviour
     public float jumpforce;
     private Rigidbody rb;
     private RaycastHit hit;
+    private RaycastHit Doublehit;
+    public bool doubleJump = false;
+    private GameObject parentObject;
+    private GameObject childObject;
+    private Vector3 jumpVelocity;
     void Awake()
     {
         controls = new ProjectStarCell();
@@ -23,9 +28,11 @@ public class PlayerController1 : MonoBehaviour
         controls.Player.Jump.performed += ctx => jump = ctx.ReadValue<float>();
         //controls.Player.Jump.canceled += ctx => jump = 0;
         rb = GetComponent<Rigidbody>();
-        
+        parentObject = GameObject.Find("Cube");
+        childObject = parentObject.transform.GetChild(0).gameObject;
     }
     
+
     private void OnEnable()
     {
         controls.Player.Enable(); //enables movement on start
@@ -38,21 +45,40 @@ public class PlayerController1 : MonoBehaviour
 
     private void Update()
     {
+        
         Vector3 movement = new Vector3(move.x, 0.0f, move.y)*speed*Time.deltaTime; //gets a value based on actual seconds not pc specs that is used to calculate movement
+        
         if (controls.Player.Jump.triggered)
         {
-            Jump();
+            if (doubleJump == false)
+            {
+                Jump();
+            }
         }
+
+        if (doubleJump == true)
+        {
+            if (controls.Player.Jump.triggered)
+            {
+                Doublejump();
+            }
+        }
+        
         transform.Translate(movement, Space.World); // gets the movement value and makes it relative to the world coordinates
         if (Physics.Raycast(transform.position, -Vector3.up, out hit,.6f))
         {
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
         }
+
+        if (Physics.Raycast(childObject.transform.position, -Vector3.up, out Doublehit,.6f))
+        {
+            Debug.DrawLine(childObject.transform.position, Doublehit.point, Color.cyan);
+        }
     }
 
     private void Jump()
     {
-        Vector3 jumpVelocity = new Vector2(0f, jumpforce);
+        jumpVelocity = new Vector2(0f, jumpforce);
         
         if (hit.collider != false)
         {
@@ -64,6 +90,21 @@ public class PlayerController1 : MonoBehaviour
         }
         Vector2 vel = rb.velocity;
         vel.y += Physics.gravity.y;
-        
+    }
+
+    private void Doublejump()
+    {
+        jumpVelocity = new Vector2(0f, jumpforce);
+        if (hit.collider !=false)
+        {
+            rb.velocity += jumpVelocity;
+        }
+
+        if (Doublehit.collider != false)
+        {
+            rb.velocity += jumpVelocity;
+        }
+        Vector2 vel = rb.velocity;
+        vel.y += Physics.gravity.y;
     }
 }
