@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 893178531}
   - component: {fileID: 893178537}
   - component: {fileID: 893178536}
+  - component: {fileID: 893178538}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Player
@@ -411,6 +412,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 2124555534}
+--- !u!114 &893178538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893178530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7bff78902d0ee644b2b7142e995a804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunBullet: {fileID: 2904673094102473712, guid: b6326dbff61e20840b229e6ab92557f0, type: 3}
+  isShooting: 0
+  timeForShoot: 0.2
 --- !u!1 &928100333
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +536,7 @@ GameObject:
   - component: {fileID: 1033936589}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Objects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -737,7 +753,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
